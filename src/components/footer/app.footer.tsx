@@ -9,12 +9,14 @@ import { useHasMounted } from '@/utils/customHook';
 const Footer = () => {
     const hasMounted = useHasMounted();
     if (!hasMounted) return (<></>);
+
+
     return (
         <AppBar position='fixed' color='inherit' sx={{ top: 'auto', bottom: 0 }}>
             <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 <AudioPlayer
                     autoPlay
-                    src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3"
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
                     onPlay={e => console.log("onPlay")}
                     volume={0.5}
                     style={{
