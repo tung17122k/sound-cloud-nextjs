@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { WaveSurferOptions } from 'wavesurfer.js';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { Tooltip } from '@mui/material';
 import './wave.scss'
 
 
@@ -104,22 +105,22 @@ const WaveTrack = () => {
     const arrComments = [
         {
             id: 1,
-            moment: 10,
             avatar: "http://localhost:8000/images/chill1.png",
+            moment: 10,
             user: "username 1",
             content: "just a comment1"
         },
         {
             id: 2,
-            moment: 30,
             avatar: "http://localhost:8000/images/chill1.png",
+            moment: 30,
             user: "username 2",
             content: "just a comment3"
         },
         {
             id: 3,
-            moment: 50,
             avatar: "http://localhost:8000/images/chill1.png",
+            moment: 50,
             user: "username 3",
             content: "just a comment3"
         },
@@ -203,30 +204,43 @@ const WaveTrack = () => {
                             </span>
                         </div>
                     </div>
-                    <div ref={containerRef} className='wave-form-container'>
-                        <div className="time">{time}</div>
-                        <div className="duration" id="duration">{duration}</div>
-                        <div className="hover-wave" ref={hoverRef}></div>
+                    <div ref={containerRef} className="wave-form-container">
+                        <div className="time" >{time}</div>
+                        <div className="duration" >{duration}</div>
+                        <div ref={hoverRef} className="hover-wave"></div>
                         <div className="overlay"
                             style={{
                                 position: "absolute",
                                 height: "30px",
                                 width: "100%",
                                 bottom: "0",
-                                background: "#ccc"
+                                // background: "#ccc"
+                                backdropFilter: "brightness(0.5)"
                             }}
                         ></div>
-                        <div className='moments' style={{ position: "relative" }}>
+                        <div className="comments"
+                            style={{ position: "relative" }}
+                        >
                             {
                                 arrComments.map(item => {
                                     return (
-                                        <img src="http://localhost:8000/images/chill1.png" alt="" key={item.id} style={{
-                                            height: 20, width: 20,
-                                            position: "absolute",
-                                            top: 71,
-                                            zIndex: 20,
-                                            left: `${item.moment}%`,
-                                        }} />
+                                        <Tooltip title={item.content} arrow>
+                                            <img
+                                                onPointerMove={(e) => {
+                                                    const hover = hoverRef.current!;
+                                                    hover.style.width = calLeft(item.moment + 3)
+                                                }}
+                                                key={item.id}
+                                                style={{
+                                                    height: 20, width: 20,
+                                                    position: "absolute",
+                                                    top: 71,
+                                                    zIndex: 20,
+                                                    left: calLeft(item.moment)
+                                                }}
+                                                src={`http://localhost:8000/images/chill1.png`}
+                                            />
+                                        </Tooltip>
                                     )
                                 })
                             }
