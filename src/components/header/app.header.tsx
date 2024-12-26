@@ -16,6 +16,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Container } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 
@@ -64,6 +65,11 @@ export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
+
+    const { data: session } = useSession();
+
+
+
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -164,11 +170,21 @@ export default function Header() {
                                 textDecoration: "unset"
                             }
                         }}>
-                            <Link href="/playlist" >Playlists</Link>
-                            <Link href="/like">Likes</Link>
-                            <Link href="/upload">Upload</Link>
+                            {
+                                session ? (
+                                    <><Link href="/playlist" >Playlists</Link>
+                                        <Link href="/like">Likes</Link>
+                                        <Link href="/upload">Upload</Link>
+                                        <Avatar onClick={handleProfileMenuOpen}></Avatar>
+                                    </>
+                                )
+                                    : (
+                                        <>
+                                            <Link href={"/api/auth/signin"}>Login</Link>
+                                        </>
+                                    )
+                            }
 
-                            <Avatar onClick={handleProfileMenuOpen}></Avatar>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
