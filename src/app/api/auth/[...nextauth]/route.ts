@@ -12,6 +12,19 @@ export const authOptions: AuthOptions = {
         }),
         // ...add more providers here
     ],
+    callbacks: {
+        async jwt({ token, user, account, profile, trigger }) {
+            if (trigger === "signIn" && account?.provider === "github") {
+                token.address = "Ha Noi"
+            }
+            return token
+        },
+        async session({ session, token, user }) {
+            //@ts-ignore
+            session.address = token.address;
+            return session
+        }
+    }
 }
 
 

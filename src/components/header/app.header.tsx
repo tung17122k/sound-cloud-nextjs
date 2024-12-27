@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { Container } from '@mui/material';
+import { Button, colors, Container } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -67,6 +67,8 @@ export default function Header() {
         React.useState<null | HTMLElement>(null);
 
     const { data: session } = useSession();
+    console.log(session);
+
 
 
 
@@ -116,7 +118,10 @@ export default function Header() {
                     Profile
                 </Link>
             </MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={() => {
+                handleMenuClose();
+                signOut();
+            }}>Logout</MenuItem>
         </Menu>
     );
 
@@ -180,11 +185,10 @@ export default function Header() {
                                 )
                                     : (
                                         <>
-                                            <Link href={"/api/auth/signin"}>Login</Link>
+                                            <Link href={"#"} onClick={() => signIn()} style={{ backgroundColor: "white", color: "cadetblue", padding: "10px 20px", border: "1px solid #ccc", outline: "none", borderRadius: "8px", cursor: "pointer" }}  >Login</Link>
                                         </>
                                     )
                             }
-
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
