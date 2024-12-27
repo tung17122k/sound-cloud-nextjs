@@ -1,8 +1,17 @@
 import Header from "@/components/header/app.header";
 import MainSlider from "@/components/main/main.slider";
 import { sendRequestJS } from "@/utils/api";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function HomePage() {
+  // get session
+  const session = await getServerSession(authOptions)
+  console.log(">>>>>>> check session", session);
+
+
+
+  // fetch data server
   const chills = await sendRequestJS<IBackendRes<ITrackTop[]>>({
     url: "http://localhost:8000/api/v1/tracks/top",
     method: "POST",
