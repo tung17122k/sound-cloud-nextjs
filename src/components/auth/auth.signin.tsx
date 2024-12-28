@@ -4,13 +4,14 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { Label } from '@mui/icons-material';
-import { Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Avatar, Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
+import { signIn } from 'next-auth/react';
 
 
 
@@ -102,7 +103,10 @@ const AuthSignIn = () => {
                         marginTop: "20px"
                     }}>or using </Divider>
                     <Grid container alignItems="center" justifyContent="center" paddingTop="10px" gap="10px">
-                        <GitHubIcon color='primary' fontSize='large' sx={{ cursor: "pointer" }} />
+
+                        <GitHubIcon color='primary' fontSize='large' sx={{ cursor: "pointer" }} onClick={() => signIn('github')} />
+
+
                         <GoogleIcon color='primary' fontSize='large' sx={{ cursor: "pointer" }} />
                     </Grid>
                 </Grid>

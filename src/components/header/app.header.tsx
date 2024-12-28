@@ -185,7 +185,7 @@ export default function Header() {
                                 )
                                     : (
                                         <>
-                                            <Link href={"#"} onClick={() => signIn()} style={{ backgroundColor: "white", color: "cadetblue", padding: "10px 20px", border: "1px solid #ccc", outline: "none", borderRadius: "8px", cursor: "pointer" }}  >Login</Link>
+                                            <Link href={"/auth/signin"} style={{ backgroundColor: "white", color: "cadetblue", padding: "10px 20px", border: "1px solid #ccc", outline: "none", borderRadius: "8px", cursor: "pointer" }}  >Login</Link>
                                         </>
                                     )
                             }
