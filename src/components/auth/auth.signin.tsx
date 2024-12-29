@@ -3,8 +3,8 @@
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import { Label } from '@mui/icons-material';
-import { Avatar, Box, Button, Divider, IconButton, InputAdornment, TextField } from '@mui/material';
+import { ArrowBack, Label } from '@mui/icons-material';
+import { Alert, Avatar, Box, Button, Divider, IconButton, InputAdornment, Snackbar, TextField } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -12,6 +12,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 
 
@@ -24,15 +26,19 @@ const AuthSignIn = () => {
     const [isErrorPassword, setIsErrorPassword] = useState(false);
     const [errorUsername, setErrorUsername] = useState("");
     const [errorPassword, setErrorPassword] = useState("");
+    const router = useRouter();
+    const [openMessage, setOpenMessage] = useState<boolean>(false);
+    const [resMessage, setResMessage] = useState<string>("");
 
 
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setErrorPassword("");
         setErrorUsername("");
         setIsErrorPassword(false);
         setIsErrorUsername(false);
+
         if (!username) {
             setIsErrorUsername(true);
             setErrorUsername("username is not empty");
@@ -44,9 +50,25 @@ const AuthSignIn = () => {
             return;
         }
         console.log(">>> check username: ", username, ' pass: ', password)
+        const res = await signIn("credentials", {
+            username: username,
+            password: password,
+            redirect: false
+        });
+        if (!res?.error) {
+            router.push("/")
+        } else {
+            setOpenMessage(true);
+            setResMessage(res.error);
+        }
+
+
+
     }
 
     return (
+
+
         <div style={{
             margin: "0 auto",
             marginTop: "100px"
@@ -63,6 +85,9 @@ const AuthSignIn = () => {
 
                 }}
             >
+                <Link href={"/"} >
+                    <ArrowBack />
+                </Link>
                 <Grid container spacing={2} direction={'column'}>
                     <h1 style={{
                         margin: "0 auto", fontSize: "30px", color: "#1976D2", marginBottom: "10px"
@@ -87,6 +112,11 @@ const AuthSignIn = () => {
                         type={showPassword ? 'text' : 'password'}
                         required
                         name='password'
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleSubmit();
+                            }
+                        }}
 
                         InputProps={{
                             endAdornment: <InputAdornment position="end">
@@ -110,6 +140,21 @@ const AuthSignIn = () => {
                         <GoogleIcon color='primary' fontSize='large' sx={{ cursor: "pointer" }} />
                     </Grid>
                 </Grid>
+                <Snackbar
+                    open={openMessage}
+                    // autoHideDuration={2000}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                    <Alert
+                        severity="error"
+                        variant="standard"
+                        onClose={() => setOpenMessage(false)}
+
+                        sx={{ width: '100%', color: "red" }}
+                    >
+                        {resMessage}
+                    </Alert>
+                </Snackbar>
 
             </Box>
         </div >
