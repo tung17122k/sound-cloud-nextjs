@@ -27,6 +27,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     );
 }
 
+// upload img và response trả về fileName của ảnh => bắn nó vào headers gửi lên create track
 function InputFileUpload(props: any) {
     const { setInfo, info } = props;
     const { data: session } = useSession();
@@ -34,6 +35,8 @@ function InputFileUpload(props: any) {
     const handleUpload = async (image: any) => {
         const formData = new FormData()
         formData.append('fileUpload', image);
+        console.log(">>>>> check formData", formData);
+
 
         try {
             const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData, {
@@ -44,7 +47,7 @@ function InputFileUpload(props: any) {
 
             })
             // sau khi api tra ve res
-            console.log(">>>> check res", res.data);
+            // console.log(">>>> check res", res.data);
             setInfo({
                 ...info,
                 imgUrl: res.data.data.fileName,
@@ -139,6 +142,7 @@ const Step2 = (props: Iprops) => {
     );
 
     React.useEffect(() => {
+        // kiếm tra nếu có trackUpload và khi đã upload file mp3 => res => gắn vào uploadedTrackName thì set nó là trackUrl vào info => gửi info là header để create track
         if (trackUpload && trackUpload.uploadedTrackName) {
             setInfo({
                 ...info,
@@ -167,7 +171,7 @@ const Step2 = (props: Iprops) => {
             },
         })
         console.log(">>>>> check Info:", info);
-        console.log(">>>> check res: ", res);
+        // console.log(">>>> check res: ", res);
 
         if (res.statusCode === 201) {
             alert(res.message)
