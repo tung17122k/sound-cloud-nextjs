@@ -67,7 +67,7 @@ export default function Header() {
         React.useState<null | HTMLElement>(null);
 
     const { data: session } = useSession();
-    console.log(session);
+    // console.log(session);
 
 
 
@@ -179,7 +179,7 @@ export default function Header() {
                                 session ? (
                                     <><Link href="/playlist" >Playlists</Link>
                                         <Link href="/like">Likes</Link>
-                                        <Link href="/upload">Upload</Link>
+                                        <Link href="/track/upload">Upload</Link>
                                         <Avatar onClick={handleProfileMenuOpen}></Avatar>
                                     </>
                                 )
