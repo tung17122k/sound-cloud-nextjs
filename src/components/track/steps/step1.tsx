@@ -8,6 +8,7 @@ import { useCallback, useState } from 'react';
 import { sendRequestFile, sendRequestJS } from '@/utils/api';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { useToast } from '@/utils/toast';
 
 
 
@@ -53,6 +54,7 @@ interface IProps {
 const Step1 = (props: IProps) => {
     const { trackUpload } = props;
     const { data: session } = useSession();
+    const toast = useToast();
 
     const onDrop = useCallback(async (acceptedFiles: FileWithPath[]) => {
         // Do something with the files
@@ -90,12 +92,11 @@ const Step1 = (props: IProps) => {
                     ...prev,
                     uploadedTrackName: res.data.data.fileName
                 }))
-
-                console.log(">>>> check res", res.data);
+                // console.log(">>>> check res", res.data);
 
             } catch (error) {
                 //@ts-ignore
-                alert(error?.response?.data);
+                toast.error(error?.response?.data);
             }
         }
 

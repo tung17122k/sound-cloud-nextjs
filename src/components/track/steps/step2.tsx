@@ -7,6 +7,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { sendRequestJS } from "@/utils/api";
+import { useToast } from "@/utils/toast";
 
 
 
@@ -31,13 +32,12 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 function InputFileUpload(props: any) {
     const { setInfo, info } = props;
     const { data: session } = useSession();
+    const toast = useToast();
 
     const handleUpload = async (image: any) => {
         const formData = new FormData()
         formData.append('fileUpload', image);
         console.log(">>>>> check formData", formData);
-
-
         try {
             const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData, {
                 headers: {
@@ -56,7 +56,9 @@ function InputFileUpload(props: any) {
 
         } catch (error) {
             //@ts-ignore
-            alert(error?.response?.data);
+            // alert(error?.response?.data);
+            toast.error(error?.response?.data)
+
         }
     }
     return (
@@ -117,7 +119,8 @@ interface Iprops {
         fileName: string,
         percent: number,
         uploadedTrackName: string
-    }
+    },
+    setValue: (number: number) => void
 }
 
 interface INewTrack {
@@ -130,7 +133,8 @@ interface INewTrack {
 
 const Step2 = (props: Iprops) => {
     const { data: session } = useSession();
-    const { trackUpload } = props;
+    const toast = useToast();
+    const { trackUpload, setValue } = props;
     const [info, setInfo] = React.useState<INewTrack>(
         {
             title: "",
@@ -174,11 +178,11 @@ const Step2 = (props: Iprops) => {
         // console.log(">>>> check res: ", res);
 
         if (res.statusCode === 201) {
-            alert(res.message)
+            toast.success(res.message);
+            setValue(0);
         } else {
-            alert(res.message)
+            toast.error(res.message);
         }
-
     }
 
 
