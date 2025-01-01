@@ -111,7 +111,7 @@ export default function Header() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose} >
-                <Link href="/profile" style={{
+                <Link href={`/profile/${session?.user._id}`} style={{
                     color: 'unset',
                     textDecoration: 'none',
                 }}>
