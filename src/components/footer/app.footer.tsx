@@ -6,6 +6,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import AppBar from '@mui/material/AppBar';
 import { useHasMounted } from '@/utils/customHook';
 import { useTrackContext } from '@/lib/track.wrapper';
+import { useRef } from 'react';
 
 // import { TrackContext } from '@/lib/track.wrapper';
 
@@ -14,6 +15,16 @@ const Footer = () => {
     const hasMounted = useHasMounted();
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
     console.log(">>>>check currentTrack", currentTrack);
+    const playerRef = useRef(null);
+
+    //@ts-ignore
+    if (currentTrack.isPlaying) {
+        //@ts-ignore
+        playerRef?.current?.audio?.current.play();
+    } else {
+        //@ts-ignore
+        playerRef?.current?.audio?.current.pause();
+    }
 
 
 
@@ -32,14 +43,17 @@ const Footer = () => {
                     }
                 }}>
                     <AudioPlayer
+                        ref={playerRef}
                         layout='horizontal-reverse'
                         autoPlay
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/hoidanit.mp3`}
-                        onPlay={e => console.log("onPlay")}
+                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
+                        onPlay={() => setCurrentTrack({ ...currentTrack, isPlaying: true })}
+                        onPause={() => setCurrentTrack({ ...currentTrack, isPlaying: false })}
                         volume={0.5}
                         style={{
                             boxShadow: "unset"
                         }}
+
                     />
                     <div style={{
                         display: "flex",
@@ -51,17 +65,14 @@ const Footer = () => {
                     }}>
                         <span style={{
                             color: "gray",
-                        }}>Author</span>
+                        }}>{currentTrack.title || "Tác giả"}</span>
                         <span style={{
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             WebkitLineClamp: 1,
                             display: "-webkit-box",
                             WebkitBoxOrient: "vertical",
-
-
-
-                        }}>Name of music Name of music Name of music</span>
+                        }}>{currentTrack.description || "Mô tả bài nhạc"}</span>
                     </div>
                 </Container>
 
