@@ -7,7 +7,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export default async function HomePage() {
   // get session
   const session = await getServerSession(authOptions)
-  console.log(">>>>>>> check session", session);
+  // console.log(">>>>>>> check session", session);
 
 
 

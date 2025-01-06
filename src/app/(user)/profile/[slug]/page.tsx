@@ -14,7 +14,7 @@ const ProfilePage = async ({ params }: { params: { slug: string } }) => {
     })
 
     const data = tracks?.data?.result ?? [];
-    console.log(">>>>>>>>>>check data", data);
+    // console.log(">>>>>>>>>>check data", data);
 
     return (
         <Container sx={{

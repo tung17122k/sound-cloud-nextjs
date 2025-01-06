@@ -12,11 +12,15 @@ import { useTrackContext } from '@/lib/track.wrapper';
 
 
 interface IProps {
-    track: ITrackTop | null
+    track: ITrackTop | null,
+    listComment: ITrackComment[],
 }
 
 const WaveTrack = (props: IProps) => {
-    const { track } = props;
+    const { track, listComment } = props;
+    console.log(">>> check comment", listComment);
+
+
     const containerRef = useRef<HTMLDivElement>(null);
     const hoverRef = useRef<HTMLDivElement>(null);
     const [time, setTime] = useState<string>("0:00");
@@ -134,29 +138,29 @@ const WaveTrack = (props: IProps) => {
 
 
 
-    const arrComments = [
-        {
-            id: 1,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 10,
-            user: "username 1",
-            content: "just a comment1"
-        },
-        {
-            id: 2,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 30,
-            user: "username 2",
-            content: "just a comment3"
-        },
-        {
-            id: 3,
-            avatar: "http://localhost:8000/images/chill1.png",
-            moment: 50,
-            user: "username 3",
-            content: "just a comment3"
-        },
-    ]
+    // const arrComments = [
+    //     {
+    //         id: 1,
+    //         avatar: "http://localhost:8000/images/chill1.png",
+    //         moment: 10,
+    //         user: "username 1",
+    //         content: "just a comment1"
+    //     },
+    //     {
+    //         id: 2,
+    //         avatar: "http://localhost:8000/images/chill1.png",
+    //         moment: 30,
+    //         user: "username 2",
+    //         content: "just a comment3"
+    //     },
+    //     {
+    //         id: 3,
+    //         avatar: "http://localhost:8000/images/chill1.png",
+    //         moment: 50,
+    //         user: "username 3",
+    //         content: "just a comment3"
+    //     },
+    // ]
 
     const calLeft = (moment: number) => {
         const hardCodeDuration = 199;
@@ -260,15 +264,15 @@ const WaveTrack = (props: IProps) => {
                             style={{ position: "relative" }}
                         >
                             {
-                                arrComments.map(item => {
+                                listComment.map(item => {
                                     return (
-                                        <Tooltip title={item.content} arrow key={item.id}>
+                                        <Tooltip title={item.content} arrow key={item._id}>
                                             <img
                                                 onPointerMove={(e) => {
                                                     const hover = hoverRef.current!;
                                                     hover.style.width = calLeft(item.moment + 3)
                                                 }}
-                                                key={item.id}
+                                                key={item._id}
                                                 style={{
                                                     height: 20, width: 20,
                                                     position: "absolute",

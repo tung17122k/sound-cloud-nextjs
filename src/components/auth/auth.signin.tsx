@@ -49,7 +49,7 @@ const AuthSignIn = () => {
             setErrorPassword("password is not empty");
             return;
         }
-        console.log(">>> check username: ", username, ' pass: ', password)
+        // console.log(">>> check username: ", username, ' pass: ', password)
         const res = await signIn("credentials", {
             username: username,
             password: password,

@@ -37,7 +37,7 @@ function InputFileUpload(props: any) {
     const handleUpload = async (image: any) => {
         const formData = new FormData()
         formData.append('fileUpload', image);
-        console.log(">>>>> check formData", formData);
+        // console.log(">>>>> check formData", formData);
         try {
             const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData, {
                 headers: {
