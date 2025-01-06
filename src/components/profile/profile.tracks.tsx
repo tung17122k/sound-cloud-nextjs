@@ -13,15 +13,16 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import { useTrackContext } from '@/lib/track.wrapper';
 import PauseIcon from '@mui/icons-material/Pause';
+import Link from "next/link";
 
 interface IProps {
     data: ITrackTop
 }
 
 const ProfileTracks = (props: IProps) => {
-    const { data } = props;
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
-    console.log(">>>>currentTrack PROFILE", currentTrack);
+    const { data } = props;
+    // console.log(">>>>currentTrack PROFILE", currentTrack);
 
     // console.log(">>>>check data client", data);
 
@@ -31,9 +32,14 @@ const ProfileTracks = (props: IProps) => {
             <Card sx={{ display: 'flex', alignItem: "center", justifyContent: "space-between" }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography component="div" variant="h5">
-                            {data.title}
-                        </Typography>
+
+                        <Link href={`/track/${data._id}?audio=${data.trackUrl}&id=${data._id}`} style={{ textDecoration: "none", color: "black", fontWeight: 500 }}>
+                            <Typography component="div" variant="h5">
+                                {data.title}
+                            </Typography>
+
+                        </Link>
+
                         <Typography
                             variant="subtitle1"
                             component="div"

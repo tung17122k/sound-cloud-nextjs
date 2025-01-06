@@ -6,7 +6,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import AppBar from '@mui/material/AppBar';
 import { useHasMounted } from '@/utils/customHook';
 import { useTrackContext } from '@/lib/track.wrapper';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 // import { TrackContext } from '@/lib/track.wrapper';
 
@@ -14,17 +14,20 @@ import { useRef } from 'react';
 const Footer = () => {
     const hasMounted = useHasMounted();
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
-    console.log(">>>>check currentTrack", currentTrack);
+    // console.log(">>>>check currentTrack", currentTrack);
     const playerRef = useRef(null);
 
-    //@ts-ignore
-    if (currentTrack.isPlaying) {
+
+    useEffect(() => {
         //@ts-ignore
-        playerRef?.current?.audio?.current.play();
-    } else {
-        //@ts-ignore
-        playerRef?.current?.audio?.current.pause();
-    }
+        if (currentTrack.isPlaying) {
+            //@ts-ignore
+            playerRef?.current?.audio?.current.play();
+        } else {
+            //@ts-ignore
+            playerRef?.current?.audio?.current.pause();
+        }
+    }, [currentTrack])
 
 
 

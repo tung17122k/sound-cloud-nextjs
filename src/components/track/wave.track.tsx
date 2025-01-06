@@ -7,15 +7,27 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Tooltip } from '@mui/material';
 import './wave.scss'
+import { sendRequestJS } from '@/utils/api';
+import { useTrackContext } from '@/lib/track.wrapper';
 
 
-const WaveTrack = () => {
+interface IProps {
+    track: ITrackTop | null
+}
+
+const WaveTrack = (props: IProps) => {
+    const { track } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const hoverRef = useRef<HTMLDivElement>(null);
     const [time, setTime] = useState<string>("0:00");
     const [duration, setDuration] = useState<string>("0:00");
     const searchParams = useSearchParams();
     const fileName = searchParams.get('audio');
+    const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
+
+
+
+
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
 
@@ -93,10 +105,30 @@ const WaveTrack = () => {
         }
     }, [wavesurfer])
 
+
+    //logic khi chạy bài track
+    useEffect(() => {
+        // khi click vào play ở footer thì sẽ set isPlaying = true và chạy track ở footer => track ở wave sẽ ngừng
+        if (wavesurfer && currentTrack.isPlaying) {
+            wavesurfer.pause();
+        }
+    }, [currentTrack])
+
+
+
+    // nếu có data từ phía sever và chưa có track ở trong context thì set track vào context và set isPlaying là auto = false
+    //logic ở thanh footer
+    useEffect(() => {
+        if (track?._id && !currentTrack?._id) {
+            setCurrentTrack({ ...track, isPlaying: false });
+        }
+    }, [track])
+
+
+
     const onPlayClick = useCallback(() => {
         if (wavesurfer) {
             wavesurfer.isPlaying() ? wavesurfer.pause() : wavesurfer.play();
-
         }
     }, [wavesurfer])
 
@@ -151,20 +183,26 @@ const WaveTrack = () => {
                     <div className='info' style={{
                         display: 'flex'
                     }}>
-
-                        <button onClick={() => onPlayClick()} style={{
-                            borderRadius: "100%",
-                            background: "#f50",
-                            height: "50px",
-                            width: "50px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            cursor: "pointer",
-                            outline: "none",
-                            border: "none",
-                            color: "white"
-                        }}>
+                        <button
+                            onClick={() => {
+                                onPlayClick();
+                                if (track && wavesurfer) {
+                                    setCurrentTrack({ ...track, isPlaying: false })
+                                }
+                            }}
+                            style={{
+                                borderRadius: "100%",
+                                background: "#f50",
+                                height: "50px",
+                                width: "50px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                cursor: "pointer",
+                                outline: "none",
+                                border: "none",
+                                color: "white"
+                            }}>
                             {isPlaying === true ?
                                 <PauseIcon
                                     sx={{ fontSize: 30, color: "white" }}
@@ -188,7 +226,7 @@ const WaveTrack = () => {
                                 color: "white",
                                 display: "block",
                             }}>
-                                Name Song
+                                {track?.title}
                             </span>
                             <span style={{
                                 padding: "0px 5px",
@@ -200,7 +238,7 @@ const WaveTrack = () => {
                                 display: "block",
                             }}
                             >
-                                Author
+                                {track?.description}
                             </span>
                         </div>
                     </div>
@@ -224,7 +262,7 @@ const WaveTrack = () => {
                             {
                                 arrComments.map(item => {
                                     return (
-                                        <Tooltip title={item.content} arrow>
+                                        <Tooltip title={item.content} arrow key={item.id}>
                                             <img
                                                 onPointerMove={(e) => {
                                                     const hover = hoverRef.current!;

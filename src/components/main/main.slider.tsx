@@ -86,7 +86,7 @@ const MainSlider = (props: IProps) => {
                                 <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} alt="" style={{
 
                                 }} />
-                                <Link href={`/track/${track._id}?audio=${track.trackUrl}`} >
+                                <Link href={`/track/${track._id}?audio=${track.trackUrl}&id=${track._id}`} >
                                     <h4 style={{
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
