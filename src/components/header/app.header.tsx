@@ -17,6 +17,7 @@ import { Button, colors, Container } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
 import { useSession, signIn, signOut } from "next-auth/react"
+import { fetchDefaultImages } from '@/utils/api';
 
 
 
@@ -177,10 +178,15 @@ export default function Header() {
                         }}>
                             {
                                 session ? (
-                                    <><Link href="/playlist" >Playlists</Link>
+                                    <>
+                                        <Link href="/playlist" >Playlists</Link>
                                         <Link href="/like">Likes</Link>
                                         <Link href="/track/upload">Upload</Link>
-                                        <Avatar onClick={handleProfileMenuOpen}></Avatar>
+                                        <img onClick={handleProfileMenuOpen} src={fetchDefaultImages(session.user.type)} style={{
+                                            width: "40px",
+                                            height: "40px",
+                                            objectFit: "cover"
+                                        }} />
                                     </>
                                 )
                                     : (

@@ -7,7 +7,7 @@ import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Tooltip } from '@mui/material';
 import './wave.scss'
-import { sendRequestJS } from '@/utils/api';
+import { fetchDefaultImages, sendRequestJS } from '@/utils/api';
 import { useTrackContext } from '@/lib/track.wrapper';
 
 
@@ -280,7 +280,7 @@ const WaveTrack = (props: IProps) => {
                                                     zIndex: 20,
                                                     left: calLeft(item.moment)
                                                 }}
-                                                src={`http://localhost:8000/images/chill1.png`}
+                                                src={fetchDefaultImages(item?.user?.type)}
                                             />
                                         </Tooltip>
                                     )
@@ -295,11 +295,12 @@ const WaveTrack = (props: IProps) => {
                     display: "flex",
                     alignItems: "center"
                 }}>
-                    <div style={{
-                        background: "#ccc",
-                        width: 250,
-                        height: 250
-                    }}>
+                    <div>
+                        <img src={`http://localhost:8000/images/${track?.imgUrl}`} alt="" style={{
+                            width: 250,
+                            height: 250,
+                            objectFit: "cover"
+                        }} />
                     </div>
                 </div>
             </div>
