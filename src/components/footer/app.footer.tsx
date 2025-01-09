@@ -35,52 +35,57 @@ const Footer = () => {
 
 
     return (
-        <div style={{
-            marginTop: "70px"
-        }}>
-            <AppBar position='fixed' color='inherit' sx={{ top: 'auto', bottom: 0 }}>
-                <Container sx={{
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px',
-                    ".rhap_main": {
-                        gap: "30px"
-                    }
+        <>
+            {currentTrack._id &&
+                <div style={{
+                    marginTop: "70px"
                 }}>
-                    <AudioPlayer
-                        ref={playerRef}
-                        layout='horizontal-reverse'
-                        autoPlay
-                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
-                        onPlay={() => setCurrentTrack({ ...currentTrack, isPlaying: true })}
-                        onPause={() => setCurrentTrack({ ...currentTrack, isPlaying: false })}
-                        volume={0.5}
-                        style={{
-                            boxShadow: "unset"
-                        }}
+                    <AppBar position='fixed' color='inherit' sx={{ top: 'auto', bottom: 0 }}>
+                        <Container sx={{
+                            display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px',
+                            ".rhap_main": {
+                                gap: "30px"
+                            }
+                        }}>
+                            <AudioPlayer
+                                ref={playerRef}
+                                layout='horizontal-reverse'
+                                autoPlay
+                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/tracks/${currentTrack.trackUrl}`}
+                                onPlay={() => setCurrentTrack({ ...currentTrack, isPlaying: true })}
+                                onPause={() => setCurrentTrack({ ...currentTrack, isPlaying: false })}
+                                volume={0.5}
+                                style={{
+                                    boxShadow: "unset"
+                                }}
 
-                    />
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "start",
-                        justifyContent: "center",
-                        maxWidth: "120px",
-                        // flex: 1
-                    }}>
-                        <span style={{
-                            color: "gray",
-                        }}>{currentTrack.title || "Tác giả"}</span>
-                        <span style={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            WebkitLineClamp: 1,
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                        }}>{currentTrack.description || "Mô tả bài nhạc"}</span>
-                    </div>
-                </Container>
+                            />
+                            <div style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "start",
+                                justifyContent: "center",
+                                maxWidth: "120px",
+                                // flex: 1
+                            }}>
+                                <span style={{
+                                    color: "gray",
+                                }}>{currentTrack.title || "Tác giả"}</span>
+                                <span style={{
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    WebkitLineClamp: 1,
+                                    display: "-webkit-box",
+                                    WebkitBoxOrient: "vertical",
+                                }}>{currentTrack.description || "Mô tả bài nhạc"}</span>
+                            </div>
+                        </Container>
 
-            </AppBar >
-        </div>
+                    </AppBar >
+                </div>
+            }
+        </>
+
 
 
 

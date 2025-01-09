@@ -9,6 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <>
       <Header />
       {children}
+      <div style={{ marginBottom: "100px" }}></div>
       <Footer />
     </>
   );

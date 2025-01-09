@@ -2,6 +2,7 @@
 import WaveTrack from '@/components/track/wave.track'
 import { Container } from '@mui/material'
 import { sendRequestJS } from '@/utils/api'
+import { cache } from 'react'
 
 
 const DetailTrackPage = async (props: any) => {
@@ -14,7 +15,8 @@ const DetailTrackPage = async (props: any) => {
 
     const res = await sendRequestJS<IBackendRes<ITrackTop>>({
         url: `http://localhost:8000/api/v1/tracks/${params.slug}`,
-        method: "GET"
+        method: "GET",
+        nextOption: { cache: 'no-store' },
     })
 
     const resComment = await sendRequestJS<IBackendRes<IModelPaginate<ITrackComment>>>({

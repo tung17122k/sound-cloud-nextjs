@@ -5,10 +5,12 @@ import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { WaveSurferOptions } from 'wavesurfer.js';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { Tooltip } from '@mui/material';
+import { TextField, Tooltip } from '@mui/material';
 import './wave.scss'
 import { fetchDefaultImages, sendRequestJS } from '@/utils/api';
 import { useTrackContext } from '@/lib/track.wrapper';
+import CommentTrack from './comment.track';
+import LikeTrack from './like.track';
 
 
 interface IProps {
@@ -18,7 +20,9 @@ interface IProps {
 
 const WaveTrack = (props: IProps) => {
     const { track, listComment } = props;
-    console.log(">>> check comment", listComment);
+    // console.log(">>> check comment", listComment);
+    // console.log(">>>> check track", track);
+
 
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -28,6 +32,7 @@ const WaveTrack = (props: IProps) => {
     const searchParams = useSearchParams();
     const fileName = searchParams.get('audio');
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
+
 
 
 
@@ -70,6 +75,8 @@ const WaveTrack = (props: IProps) => {
     }, [])
 
     const wavesurfer = useWavesurfer(containerRef, optionsMemo)
+    console.log(">>>> check wavesurfer", wavesurfer);
+
 
     // Current time & duration
     const formatTime = (seconds: number) => {
@@ -138,32 +145,10 @@ const WaveTrack = (props: IProps) => {
 
 
 
-    // const arrComments = [
-    //     {
-    //         id: 1,
-    //         avatar: "http://localhost:8000/images/chill1.png",
-    //         moment: 10,
-    //         user: "username 1",
-    //         content: "just a comment1"
-    //     },
-    //     {
-    //         id: 2,
-    //         avatar: "http://localhost:8000/images/chill1.png",
-    //         moment: 30,
-    //         user: "username 2",
-    //         content: "just a comment3"
-    //     },
-    //     {
-    //         id: 3,
-    //         avatar: "http://localhost:8000/images/chill1.png",
-    //         moment: 50,
-    //         user: "username 3",
-    //         content: "just a comment3"
-    //     },
-    // ]
+
 
     const calLeft = (moment: number) => {
-        const hardCodeDuration = 199;
+        const hardCodeDuration = wavesurfer?.getDuration() ?? 0;
         const percent = (moment / hardCodeDuration) * 100;
         return `${percent}%`
     }
@@ -304,6 +289,9 @@ const WaveTrack = (props: IProps) => {
                     </div>
                 </div>
             </div>
+            <LikeTrack track={track!} />
+
+            <CommentTrack comments={listComment} track={track!} wavesurfer={wavesurfer} />
         </div>
 
     )
