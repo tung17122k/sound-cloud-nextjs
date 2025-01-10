@@ -1,11 +1,11 @@
 'use client'
 import { useWavesurfer } from '@/utils/customHook';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { WaveSurferOptions } from 'wavesurfer.js';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { TextField, Tooltip } from '@mui/material';
+import { Tooltip } from '@mui/material';
 import './wave.scss'
 import { fetchDefaultImages, sendRequestJS } from '@/utils/api';
 import { useTrackContext } from '@/lib/track.wrapper';
@@ -30,8 +30,10 @@ const WaveTrack = (props: IProps) => {
     const [time, setTime] = useState<string>("0:00");
     const [duration, setDuration] = useState<string>("0:00");
     const searchParams = useSearchParams();
+    const router = useRouter();
     const fileName = searchParams.get('audio');
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
+    const firstViewRef = useRef(true);
 
 
 
@@ -153,6 +155,22 @@ const WaveTrack = (props: IProps) => {
         return `${percent}%`
     }
 
+    const handleIncreaseView = async () => {
+        if (firstViewRef.current) {
+            const res = await sendRequestJS<IBackendRes<IModelPaginate<ITrackLike>>>(
+                {
+                    url: `http://localhost:8000/api/v1/tracks/increase-view`,
+                    method: "POST",
+                    body: {
+                        trackId: track?._id
+                    }
+                }
+            )
+            router.refresh();
+            firstViewRef.current = false;
+        }
+    }
+
     return (
         <div style={{ marginTop: '20px' }}>
             <div style={{
@@ -175,6 +193,7 @@ const WaveTrack = (props: IProps) => {
                         <button
                             onClick={() => {
                                 onPlayClick();
+                                handleIncreaseView();
                                 if (track && wavesurfer) {
                                     setCurrentTrack({ ...track, isPlaying: false })
                                 }
