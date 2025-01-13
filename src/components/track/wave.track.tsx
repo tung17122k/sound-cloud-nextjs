@@ -20,8 +20,7 @@ interface IProps {
 
 const WaveTrack = (props: IProps) => {
     const { track, listComment } = props;
-    // console.log(">>> check comment", listComment);
-    // console.log(">>>> check track", track);
+
 
 
 
@@ -77,7 +76,7 @@ const WaveTrack = (props: IProps) => {
     }, [])
 
     const wavesurfer = useWavesurfer(containerRef, optionsMemo)
-    console.log(">>>> check wavesurfer", wavesurfer);
+
 
 
     // Current time & duration
@@ -130,7 +129,7 @@ const WaveTrack = (props: IProps) => {
 
 
     // nếu có data từ phía sever và chưa có track ở trong context thì set track vào context và set isPlaying là auto = false
-    //logic ở thanh footer
+    // logic ở thanh footer
     useEffect(() => {
         if (track?._id && !currentTrack?._id) {
             setCurrentTrack({ ...track, isPlaying: false });
