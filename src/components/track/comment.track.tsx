@@ -8,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useHasMounted } from "@/utils/customHook";
+import Image from "next/image";
 dayjs.extend(relativeTime)
 
 interface IProps {
@@ -93,9 +94,9 @@ const CommentTrack = (props: IProps) => {
                     alignItems: "center",
                     gap: "10px"
                 }}>
-                    <img src={fetchDefaultImages(session?.user?.type!)} alt="" style={{
-                        width: "200px",
-                        height: "200px",
+                    <Image src={fetchDefaultImages(session?.user?.type!)} alt="comment-avt" width={200} height={200} style={{
+                        // width: "200px",
+                        // height: "200px",
                         borderRadius: "100%",
                         objectFit: "cover",
                         marginTop: "30px"

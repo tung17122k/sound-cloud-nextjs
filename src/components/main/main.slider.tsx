@@ -11,6 +11,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Divider from '@mui/material/Divider';
 import Link from "next/link";
 import { convertSlugUrl } from "@/utils/api";
+import Image from "next/image";
+import a from "../../../public/flowers.jpg"
 
 
 interface IProps {
@@ -51,7 +53,7 @@ const MainSlider = (props: IProps) => {
         )
     }
     const settings: Settings = {
-        dots: true,
+
         infinite: true,
         speed: 500,
         slidesToShow: 3,
@@ -59,6 +61,33 @@ const MainSlider = (props: IProps) => {
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
         autoplay: false,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+
     };
     return (
         <Container>
@@ -80,24 +109,47 @@ const MainSlider = (props: IProps) => {
                 }
             }}>
                 <h2>{title}</h2>
-                <Slider {...settings} infinite={false}>
+                <Slider {...settings} infinite={false} >
                     {data.map((track) => {
                         return (
                             <div className="track" key={track._id}>
-                                <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} alt="" style={{
+                                {/* <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`} alt="" style={{
 
-                                }} />
-                                <Link href={`/track/${convertSlugUrl(track.title)}-${track._id}.html?audio=${track.trackUrl}`} >
+                                }} /> */}
+                                <div style={{
+                                    position: "relative",
+                                    height: "200px",
+                                    width: "100%",
+
+                                }}>
+                                    <Image
+                                        src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}
+                                        // src={a}
+                                        alt="image"
+                                        fill
+                                        style={{ objectFit: "contain" }}
+                                    />
+                                </div>
+                                <Link href={`/track/${convertSlugUrl(track.title)}-${track._id}.html?audio=${track.trackUrl}`} style={{
+                                    textAlign: "center",
+                                    textDecoration: "none",
+                                }}>
                                     <h4 style={{
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
                                         WebkitLineClamp: 1,
                                         display: "-webkit-box",
                                         WebkitBoxOrient: "vertical",
+                                        marginBottom: 0,
+                                        marginTop: "5px"
                                     }}>{track.title}</h4>
                                     <span style={{
-                                        color: "gray"
-                                    }}>{track.description}</span>
+                                        color: "gray",
+                                        display: "block",
+                                        fontSize: 14
+                                    }}>
+                                        {track.description}
+                                    </span>
                                 </Link>
 
                             </div>

@@ -11,6 +11,7 @@ import { fetchDefaultImages, sendRequestJS } from '@/utils/api';
 import { useTrackContext } from '@/lib/track.wrapper';
 import CommentTrack from './comment.track';
 import LikeTrack from './like.track';
+import Image from 'next/image';
 
 
 interface IProps {
@@ -270,14 +271,13 @@ const WaveTrack = (props: IProps) => {
                                 listComment.map(item => {
                                     return (
                                         <Tooltip title={item.content} arrow key={item._id}>
-                                            <img
+                                            <Image alt='avt-cmt-user' width={20} height={20}
                                                 onPointerMove={(e) => {
                                                     const hover = hoverRef.current!;
                                                     hover.style.width = calLeft(item.moment + 3)
                                                 }}
                                                 key={item._id}
                                                 style={{
-                                                    height: 20, width: 20,
                                                     position: "absolute",
                                                     top: 71,
                                                     zIndex: 20,
@@ -299,9 +299,7 @@ const WaveTrack = (props: IProps) => {
                     alignItems: "center"
                 }}>
                     <div>
-                        <img src={`http://localhost:8000/images/${track?.imgUrl}`} alt="" style={{
-                            width: 250,
-                            height: 250,
+                        <Image src={`http://localhost:8000/images/${track?.imgUrl}`} alt="img-track" width={250} height={250} style={{
                             objectFit: "cover"
                         }} />
                     </div>

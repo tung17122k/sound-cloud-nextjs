@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { sendRequestJS } from "@/utils/api";
 import { useToast } from "@/utils/toast";
+import Image from "next/image";
 
 
 
@@ -51,13 +52,12 @@ function InputFileUpload(props: any) {
             setInfo({
                 ...info,
                 imgUrl: res.data.data.fileName,
-
             })
 
         } catch (error) {
-            //@ts-ignore
+            // @ts-ignore
             // alert(error?.response?.data);
-            toast.error(error?.response?.data)
+            toast.error(error?.response?.data?.message);
 
         }
     }
@@ -207,9 +207,7 @@ const Step2 = (props: Iprops) => {
                                 backgroundColor: "#ccc"
                             }}>
                                 {info.imgUrl && (
-                                    <img src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${info.imgUrl}`} alt="" style={{
-                                        width: "250px",
-                                        height: "250px",
+                                    <Image src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${info.imgUrl}`} alt="img-upload" width={250} height={250} style={{
                                         objectFit: "cover"
                                     }} />
                                 )}

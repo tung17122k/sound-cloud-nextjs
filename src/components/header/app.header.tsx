@@ -18,6 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import Link from 'next/link'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { fetchDefaultImages } from '@/utils/api';
+import Image from 'next/image';
 
 
 
@@ -182,9 +183,7 @@ export default function Header() {
                                         <Link href="/playlist" >Playlists</Link>
                                         <Link href="/like">Likes</Link>
                                         <Link href="/track/upload">Upload</Link>
-                                        <img onClick={handleProfileMenuOpen} src={fetchDefaultImages(session.user.type)} style={{
-                                            width: "40px",
-                                            height: "40px",
+                                        <Image onClick={handleProfileMenuOpen} src={fetchDefaultImages(session.user.type)} alt='profile-image' width={40} height={40} style={{
                                             objectFit: "cover"
                                         }} />
                                     </>
