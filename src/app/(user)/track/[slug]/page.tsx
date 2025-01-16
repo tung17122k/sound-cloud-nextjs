@@ -66,6 +66,8 @@ const DetailTrackPage = async (props: any) => {
         return notFound()
     }
 
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
     return (
         <Container>
             <WaveTrack track={res?.data ?? null} listComment={resComment?.data?.result ?? []} />
