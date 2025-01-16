@@ -5,6 +5,7 @@ import { sendRequestJS } from '@/utils/api';
 import { cache } from 'react';
 import type { Metadata, ResolvingMetadata } from 'next';
 import slugify from 'slugify';
+import { notFound } from 'next/navigation'
 
 
 type Props = {
@@ -60,6 +61,10 @@ const DetailTrackPage = async (props: any) => {
             sort: "-createdAt"
         }
     })
+
+    if (!res.data) {
+        return notFound()
+    }
 
     return (
         <Container>
