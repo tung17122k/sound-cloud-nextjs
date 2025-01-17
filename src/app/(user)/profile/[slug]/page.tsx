@@ -6,7 +6,7 @@ import ProfileTracks from "@/components/profile/profile.tracks";
 const ProfilePage = async ({ params }: { params: { slug: string } }) => {
 
     const tracks = await sendRequestJS<IBackendRes<IModelPaginate<ITrackTop>>>({
-        url: "http://localhost:8000/api/v1/tracks/users?current=1&pageSize=10",
+        url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/users?current=1&pageSize=10`,
         method: "POST",
         body: {
             id: params.slug

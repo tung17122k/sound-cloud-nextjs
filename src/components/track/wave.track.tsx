@@ -159,7 +159,7 @@ const WaveTrack = (props: IProps) => {
         if (firstViewRef.current) {
             const res = await sendRequestJS<IBackendRes<IModelPaginate<ITrackLike>>>(
                 {
-                    url: `http://localhost:8000/api/v1/tracks/increase-view`,
+                    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/increase-view`,
                     method: "POST",
                     body: {
                         trackId: track?._id
@@ -299,7 +299,7 @@ const WaveTrack = (props: IProps) => {
                     alignItems: "center"
                 }}>
                     <div>
-                        <Image src={`http://localhost:8000/images/${track?.imgUrl}`} alt="img-track" width={250} height={250} style={{
+                        <Image src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track?.imgUrl}`} alt="img-track" width={250} height={250} style={{
                             objectFit: "cover"
                         }} />
                     </div>

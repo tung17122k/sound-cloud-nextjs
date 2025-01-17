@@ -13,7 +13,7 @@ export default async function HomePage() {
 
   // fetch data server
   const chills = await sendRequestJS<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: {
       category: "CHILL",
@@ -21,7 +21,7 @@ export default async function HomePage() {
     }
   })
   const workouts = await sendRequestJS<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: {
       category: "WORKOUT",
@@ -29,7 +29,7 @@ export default async function HomePage() {
     }
   })
   const party = await sendRequestJS<IBackendRes<ITrackTop[]>>({
-    url: "http://localhost:8000/api/v1/tracks/top",
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/top`,
     method: "POST",
     body: {
       category: "PARTY",

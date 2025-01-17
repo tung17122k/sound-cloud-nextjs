@@ -79,7 +79,7 @@ const ProfileTracks = (props: IProps) => {
                 <CardMedia
                     component="img"
                     sx={{ width: 151 }}
-                    image={`http://localhost:8000/images/${data.imgUrl}`}
+                    image={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${data.imgUrl}`}
                     alt="Live from space album cover"
                 />
             </Card >

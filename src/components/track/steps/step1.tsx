@@ -68,7 +68,7 @@ const Step1 = (props: IProps) => {
 
 
             try {
-                const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData, {
+                const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/files/upload`, formData, {
                     headers: {
                         'Authorization': `Bearer ${session?.access_token}`,
                         "target_type": "tracks",

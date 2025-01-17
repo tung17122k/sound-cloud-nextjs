@@ -40,7 +40,7 @@ function InputFileUpload(props: any) {
         formData.append('fileUpload', image);
         // console.log(">>>>> check formData", formData);
         try {
-            const res = await axios.post("http://localhost:8000/api/v1/files/upload", formData, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/files/upload`, formData, {
                 headers: {
                     'Authorization': `Bearer ${session?.access_token}`,
                     "target_type": "images",
@@ -161,7 +161,7 @@ const Step2 = (props: Iprops) => {
     const handleSubmitForm = async () => {
 
         const res = await sendRequestJS<IBackendRes<ITrackTop[]>>({
-            url: "http://localhost:8000/api/v1/tracks",
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks`,
             method: "POST",
             body: {
                 title: info.title,
