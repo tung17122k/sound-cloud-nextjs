@@ -12,6 +12,23 @@ type Props = {
     params: Promise<{ slug: string }>
 }
 
+export async function generateStaticParams() {
+
+
+    return [
+        {
+            slug: "xi-mang-pho-675baf17d0cfac80a2028fac.html",
+        },
+        {
+            slug: "truy-lung-bao-vat-675baf17d0cfac80a2028fa6.html",
+        },
+        {
+            slug: "its-a-must-ft-priest-675baf17d0cfac80a2028fb3.html",
+        }
+    ]
+}
+
+
 export async function generateMetadata(
     { params }: Props,
 ): Promise<Metadata> {
@@ -47,7 +64,7 @@ const DetailTrackPage = async (props: any) => {
     const res = await sendRequestJS<IBackendRes<ITrackTop>>({
         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/${id}`,
         method: "GET",
-        nextOption: { cache: 'no-store' },
+        // nextOption: { cache: 'no-store' },
     })
 
 
@@ -67,6 +84,8 @@ const DetailTrackPage = async (props: any) => {
     }
 
     await new Promise(resolve => setTimeout(resolve, 3000))
+
+
 
     return (
         <Container>

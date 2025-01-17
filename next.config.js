@@ -12,8 +12,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'host.docker.internal',
-        port: '8001',
+        hostname: 'localhost',
+        port: '8000',
         pathname: '/images/**',
       },
     ],
@@ -21,3 +21,4 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
