@@ -64,7 +64,7 @@ const DetailTrackPage = async (props: any) => {
     const res = await sendRequestJS<IBackendRes<ITrackTop>>({
         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/${id}`,
         method: "GET",
-        // nextOption: { cache: 'no-store' },
+        nextOption: { cache: 'no-store', next: { tags: ['track-by-id'] } },
     })
 
 
@@ -83,7 +83,7 @@ const DetailTrackPage = async (props: any) => {
         return notFound()
     }
 
-    await new Promise(resolve => setTimeout(resolve, 3000))
+    // await new Promise(resolve => setTimeout(resolve, 3000))
 
 
 

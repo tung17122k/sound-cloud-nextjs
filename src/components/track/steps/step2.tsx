@@ -53,7 +53,6 @@ function InputFileUpload(props: any) {
                 ...info,
                 imgUrl: res.data.data.fileName,
             })
-
         } catch (error) {
             // @ts-ignore
             // alert(error?.response?.data);
@@ -180,6 +179,14 @@ const Step2 = (props: Iprops) => {
         if (res.statusCode === 201) {
             toast.success(res.message);
             setValue(0);
+            await sendRequestJS<IBackendRes<any>>({
+                url: `/api/revalidate`,
+                method: "POST",
+                queryParams: {
+                    tag: "track-by-profile",
+                    secret: process.env.REVALIDATE_SECRET
+                }
+            })
         } else {
             toast.error(res.message);
         }

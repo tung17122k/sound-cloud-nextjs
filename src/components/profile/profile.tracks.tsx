@@ -24,7 +24,6 @@ const ProfileTracks = (props: IProps) => {
     const { currentTrack, setCurrentTrack } = useTrackContext() as ITrackContext;
     const { data } = props;
     // console.log(">>>>currentTrack PROFILE", currentTrack);
-
     // console.log(">>>>check data client", data);
 
     const theme = useTheme();
