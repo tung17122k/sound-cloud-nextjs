@@ -85,4 +85,13 @@ declare global {
         countLike: number,
         countPlay: number
     }
+    interface IPlayList {
+        createdAt: string,
+        isDeleted: boolean,
+        isPublic: boolean,
+        title: boolean,
+        tracks: any,
+        user: string,
+        _id: string
+    }
 }
