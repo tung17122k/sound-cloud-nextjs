@@ -24,6 +24,7 @@ const PlaylistPage = async () => {
             next: { tags: ['playlist-by-user'] }
         }
     })
+    //api get all tracks
     const res1 = await sendRequestJS<IBackendRes<IModelPaginate<ITrackTop>>>({
         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks`,
         method: "GET",
@@ -38,6 +39,8 @@ const PlaylistPage = async () => {
 
 
     // console.log(">>>check playlist", res);
+
+
 
     const playlists = res?.data?.result ?? [];
     console.log(">>>>check playlist", playlists);

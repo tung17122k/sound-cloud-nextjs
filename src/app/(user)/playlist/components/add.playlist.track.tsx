@@ -30,7 +30,7 @@ const getStyles = (name: string, tracksId: readonly string[], theme: Theme) => {
 const AddPlaylistTrack = (props: IProps) => {
     const { playlists, tracks } = props;
     // console.log(">>>check playlist", playlists);
-    // console.log(">>>check tracks", tracks);
+    console.log(">>>check tracks", tracks);
 
     const toast = useToast();
     const router = useRouter();
@@ -43,6 +43,7 @@ const AddPlaylistTrack = (props: IProps) => {
     const theme = useTheme();
 
     console.log(">>>check playlistId", playlistId);
+
 
     const handleClose = (event: any, reason: any) => {
         if (reason && reason == "backdropClick")
@@ -65,6 +66,11 @@ const AddPlaylistTrack = (props: IProps) => {
         const chosenPlaylist = playlists.find(i => i._id === playlistId);
         // console.log(">>>check chosen playlist", chosenPlaylist);
         // trackID có dạng HXI, Scythermane###675baf17d0cfac80a2028fb1
+        // trackID => ['Miên man###675baf17d0cfac80a2028fa5', 'Truy Lùng Bảo Vật###675baf17d0cfac80a2028fa6']
+
+        console.log(">>>check tracksId", tracksId);
+
+
         let tracks = tracksId?.map(item => item?.split("###")?.[1]);
 
         console.log(">>>check tracks", tracks);
@@ -83,21 +89,22 @@ const AddPlaylistTrack = (props: IProps) => {
                     Authorization: `Bearer ${session?.access_token}`,
                 }
             })
-            // if (res.data) {
-            //     toast.success("Thêm track vào playlist thành công!");
-            //     await sendRequestJS<IBackendRes<any>>({
-            //         url: `/api/revalidate`,
-            //         method: "POST",
-            //         queryParams: {
-            //             tag: "playlist-by-user",
-            //             secret: "justArandomString"
-            //         }
-            //     })
-            //     handleClose("", "");
-            //     router.refresh();
-            // } else {
-            //     toast.error(res.message)
-            // }
+            // ep render lai trang
+            if (res.data) {
+                toast.success("Thêm track vào playlist thành công!");
+                await sendRequestJS<IBackendRes<any>>({
+                    url: `/api/revalidate`,
+                    method: "POST",
+                    queryParams: {
+                        tag: "playlist-by-user",
+                        secret: "justArandomString"
+                    }
+                })
+                handleClose("", "");
+                router.refresh();
+            } else {
+                toast.error(res.message)
+            }
         }
 
 
@@ -142,8 +149,6 @@ const AddPlaylistTrack = (props: IProps) => {
                                 renderValue={(selected) => (
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map(value => {
-                                            console.log(">>>check value", value);
-
                                             return (
                                                 <Chip key={value} label={value?.split("###")?.[0]} />
                                             )
