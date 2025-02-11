@@ -7,6 +7,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Fragment } from "react";
 import CurrentTrack from "./components/current.track";
 import AddPlaylistTrack from "./components/add.playlist.track";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+    title: 'Playlist Page',
+    description: 'Playlist Page Desc',
+}
 
 const PlaylistPage = async () => {
     // await new Promise(resolve => setTimeout(resolve, 3000))

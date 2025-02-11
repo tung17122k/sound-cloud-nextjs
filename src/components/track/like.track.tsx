@@ -65,6 +65,17 @@ const LikeTrack = (props: IProps) => {
                 secret: process.env.REVALIDATE_SECRET
             }
         })
+        // mỗi lần like thì cần revalidate tag => cập nhật ở trang khác
+
+        await sendRequestJS<IBackendRes<any>>({
+            url: `/api/revalidate`,
+            method: "POST",
+            queryParams: {
+                tag: "liked-by-user",
+                secret: "justArandomString"
+            }
+        })
+
         router.refresh();
     }
 
